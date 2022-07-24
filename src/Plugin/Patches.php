@@ -410,7 +410,7 @@ class Patches implements PluginInterface, EventSubscriberInterface, Capable
                 $this->io->write('<comment>' . $comment . '</comment>');
             }
             $checked = $this->executeCommand(
-                'git -C %s apply --check -v %s %s',
+                'git -C %s apply --check --ignore-whitespace -v %s %s',
                 $install_path,
                 $patch_level,
                 $filename
@@ -425,7 +425,7 @@ class Patches implements PluginInterface, EventSubscriberInterface, Capable
             if ($checked) {
                 // Apply the first successful style.
                 $patched = $this->executeCommand(
-                    'git -C %s apply %s %s',
+                    'git -C %s apply --ignore-whitespace %s %s',
                     $install_path,
                     $patch_level,
                     $filename
@@ -447,7 +447,7 @@ class Patches implements PluginInterface, EventSubscriberInterface, Capable
             }
             foreach ($patch_levels as $patch_level) {
                 if ($patched = $this->executeCommand(
-                    "patch %s %s -d %s < %s",
+                    "patch %s %s --ignore-whitespace -d %s < %s",
                     $patch_level,
                     $patch_options,
                     $install_path,
